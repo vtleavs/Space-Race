@@ -61,5 +61,5 @@ function buildLevels()
         buildWall(-0.425, 0.2, 0.05, 0.2),
         buildWall(-0.125, 0.4, 0.05, 0.3)
     ];
-    //levels.push(level3);
+    levels.push(level3);
 }
