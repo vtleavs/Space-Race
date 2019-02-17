@@ -1,0 +1,102 @@
+<!-- Benji Leavitt -->
+<!-- 02/20/2019 -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="Common/webgl-utils.js"></script>
+        <script type="text/javascript" src="Common/initShaders.js"></script>
+        <script type="text/javascript" src="Common/MV.js"></script>
+        <script type="text/javascript" src="transforms.js"></script>
+        <script type="text/javascript" src="interface.js"></script>
+        <script type="text/javascript" src="objects.js"></script>
+        <script type="text/javascript" src="levels.js"></script>
+        <script type="text/javascript" src="spacerace.js"></script>
+        <link rel="stylesheet" href="styles.css">
+
+        <script id="ship-v-shader" type="x-shader/x-vertex">
+
+            attribute vec4 pointStep;
+
+            vec3 pointInit;
+            vec3 pointFinal;
+
+            uniform mat3 M;
+
+            void main()
+            {
+                pointInit = vec3(pointStep.x, pointStep.y, pointStep.w);
+                pointFinal = M * pointInit;
+                gl_Position = vec4(pointFinal.x, pointFinal.y, pointStep.z, pointStep.w);
+            }
+        </script>
+
+        <script id="wall-v-shader" type="x-shader/x-vertex">
+
+            attribute vec4 pointStep;
+
+            void main()
+            {
+               gl_Position = pointStep;
+            }
+        </script>
+
+        <script id="ship-f-shader" type="x-shader/x-fragment">
+            void main()
+            {
+                gl_FragColor = vec4 (0.0, 0.5, 0.5, 1.0);
+            }
+        </script>
+
+        <script id="wall-f-shader" type="x-shader/x-fragment">
+            void main()
+            {
+                gl_FragColor = vec4 (0.5, 0.0, 0.0, 1.0);
+            }
+        </script>
+
+        <script id="finish-f-shader" type="x-shader/x-fragment">
+            void main()
+            {
+                gl_FragColor = vec4 (0.0, 0.5, 0.0, 0.25);
+            }
+        </script>
+    </head>
+
+    <body   onload="init()"
+            onclick="onClick(event)"
+            onkeydown="onKeyDown(event)"
+            onkeyup="onKeyUp(event)">
+
+        <div id="scoresheet">
+            <div id="scoresheet-header">
+                Scores:
+            </div>
+            <div id="scores">
+                These are the scores..
+            </div>
+        </div>
+
+        <div id="header-div">
+            <div id="header-div-labels">
+                <label class="header-div-member" id="time-label"></label>
+                <label class="header-div-member" id="levelnum-label"></label>
+                <label class="header-div-member" id="par-label"></label>
+            </div>
+        </div>
+        <div id="canvas-div">
+            <canvas width="800" height="800" id="gl-canvas"></canvas>
+        </div>
+
+        <br/>
+
+        <div id="button-div">
+            <div id="button-div-buttons">
+                <button class="button-div-member" id="button-previous">Previous</button>
+                <button class="button-div-member" id="button-reset">Reset</button>
+                <button class="button-div-member" id="button-next">Next</button>
+            </div>
+        </div>
+
+    </body>
+</html>
